@@ -1,10 +1,68 @@
-# Ludo_Game
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
-Ludo: Ludo is a simple, luck-based game that can be a fun project for learning C programming and handling random events.
-Developing a complete Ludo game in C programming can be a comprehensive project, and providing the entire code here would be too lengthy. 
-However, this is a simplified version of a text-based Ludo game in C to get started. 
-This code provides the basic structure and logic for a two-player game. We can expand and enhance it as needed.
+// Function to roll a die and return a random number between 1 and 6
+int rollDie() {
+    return (rand() % 6) + 1;
+}
 
-In this simplified Ludo code, I have a basic text-based representation of a Ludo board. Players take turns rolling a die, and their positions are updated accordingly. The game continues until one of the players reaches or surpasses position 52 (the finish line).
+// Function to display the Ludo board
+void displayBoard(int player1Pos, int player2Pos) {
+    printf("\n");
+    for (int i = 1; i <= 52; i++) {
+        if (i == player1Pos) {
+            printf("P1");
+        } else if (i == player2Pos) {
+            printf("P2");
+        } else {
+            printf("-");
+        }
 
-Please note that this is just a starting point, and we can enhance the game by adding more features, such as rules for safe zones, special tiles, and win conditions, and by implementing a better user interface.
+        if (i % 13 == 0) {
+            printf("\n");
+        } else {
+            printf(" ");
+        }
+    }
+    printf("\n");
+}
+
+int main() {
+    int player1Pos = 1;
+    int player2Pos = 1;
+
+    srand(time(NULL)); // Seed for random number generation
+
+    printf("Welcome to Ludo!\n");
+
+    while (1) {
+        printf("\nPlayer 1, press enter to roll the die.");
+        getchar(); // Wait for the player to press enter
+        int roll1 = rollDie();
+        printf("Player 1 rolled a %d.\n", roll1);
+        player1Pos += roll1;
+
+        if (player1Pos > 52) {
+            printf("Player 1 has won!\n");
+            break;
+        }
+
+        displayBoard(player1Pos, player2Pos);
+
+        printf("\nPlayer 2, press enter to roll the die.");
+        getchar(); // Wait for the player to press enter
+        int roll2 = rollDie();
+        printf("Player 2 rolled a %d.\n", roll2);
+        player2Pos += roll2;
+
+        if (player2Pos > 52) {
+            printf("Player 2 has won!\n");
+            break;
+        }
+
+        displayBoard(player1Pos, player2Pos);
+    }
+
+    return 0;
+}
